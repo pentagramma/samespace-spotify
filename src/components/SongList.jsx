@@ -9,7 +9,7 @@ const SongList = ({ onSelectSong, showTopTracks, searchQuery }) => {
       .then(response => response.json())
       .then(async data => {
         setSongs(data.data);
-        // Fetch durations for each song
+       
         const durationsMap = {};
         for (let song of data.data) {
           const durationInSeconds = await fetchDuration(song.url);

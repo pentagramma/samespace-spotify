@@ -5,9 +5,9 @@ import Back from '../assets/prev.png';
 import { FaCirclePlay } from "react-icons/fa6";
 import Sound from '../assets/sound.png';
 import { MdPauseCircle, MdPlayCircle } from "react-icons/md";
-import Options from '../assets/options.png'
+import Options from '../assets/options.png';
 
-const Mp3 = ({ selectedSong, setDuration }) => { 
+const Mp3 = ({ selectedSong, setDuration, onNext, onPrev }) => { 
   const [sliderValue, setSliderValue] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0); 
@@ -105,22 +105,35 @@ const Mp3 = ({ selectedSong, setDuration }) => {
         </div>
         <div className='time flex justify-between w-full text-sm mt-5'>
           <span>{formatTime(currentTime)}</span>
-          <span className='song-duration'>{formatTime(audioRef.current?.duration || 0)}</span> {/* Updated */}
+          <span className='song-duration'>{formatTime(audioRef.current?.duration || 0)}</span>
         </div>
         <div className='mt-4 flex justify-between w-full items-center'>
-        <div>
-          <img src={Options} alt="" />
-        </div>
+          <div>
+            <img src={Options} alt="" />
+          </div>
           <div className='flex flex-row items-center'>
-            <img src={Back} alt="" className='mx-4 cursor-pointer hover:scale-110 hover:duration-300'/>
-            <div className='mx-4 cursor-pointer hover:scale-110 hover:duration-300' onClick={handlePlayPause}>
+            <img 
+              src={Back} 
+              alt="" 
+              className='mx-4 cursor-pointer hover:scale-110 hover:duration-300' 
+              onClick={onPrev} 
+            />
+            <div 
+              className='mx-4 cursor-pointer hover:scale-110 hover:duration-300' 
+              onClick={handlePlayPause}
+            >
               {isPlaying ? (
                 <MdPauseCircle className='w-12 h-12 text-white'/>
               ) : (
                 <FaCirclePlay alt="" className='w-12 h-12'/>
               )}
             </div>
-            <img src={Next} alt="" className='mx-4 cursor-pointer hover:scale-110 hover:duration-300'/>
+            <img 
+              src={Next} 
+              alt="" 
+              className='mx-4 cursor-pointer hover:scale-110 hover:duration-300' 
+              onClick={onNext} 
+            />
           </div>
           <div className=''>
             <img src={Sound} alt="" className='cursor-pointer hover:scale-110 hover:duration-300'/>
