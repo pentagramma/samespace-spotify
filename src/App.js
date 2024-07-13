@@ -12,6 +12,7 @@ function App() {
   const [showTopTracks, setShowTopTracks] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [duration, setDuration] = useState(0);
+  const [currentPlayingSongId, setCurrentPlayingSongId] = useState(null); // State to track currently playing song ID
 
   const backgroundStyle = selectedSong
     ? { background: `linear-gradient(to right, ${selectedSong.accent}, black)` }
@@ -31,18 +32,21 @@ function App() {
     const index = songs.findIndex((s) => s.id === song.id);
     setCurrentSongIndex(index);
     setSelectedSong(song);
+    setCurrentPlayingSongId(song.id); // Update currently playing song ID
   };
 
   const handleNextSong = () => {
     const nextIndex = (currentSongIndex + 1) % songs.length;
     setCurrentSongIndex(nextIndex);
     setSelectedSong(songs[nextIndex]);
+    setCurrentPlayingSongId(songs[nextIndex].id); // Update currently playing song ID
   };
 
   const handlePreviousSong = () => {
     const prevIndex = (currentSongIndex - 1 + songs.length) % songs.length;
     setCurrentSongIndex(prevIndex);
     setSelectedSong(songs[prevIndex]);
+    setCurrentPlayingSongId(songs[prevIndex].id); // Update currently playing song ID
   };
 
   return (
@@ -66,10 +70,11 @@ function App() {
             </div>
             <div className="flex justify-start mt-[32px]">
               <SongList
-                songs={songs} // Pass songs state as prop
+                songs={songs}
                 onSelectSong={handleSelectSong}
                 showTopTracks={showTopTracks}
                 searchQuery={searchQuery}
+                currentPlayingSongId={currentPlayingSongId} // Pass currently playing song ID
               />
             </div>
           </div>
@@ -79,6 +84,7 @@ function App() {
               setDuration={setDuration}
               onNext={handleNextSong}
               onPrev={handlePreviousSong}
+              setCurrentPlayingSongId={setCurrentPlayingSongId} // Pass function to update currently playing song ID
             />
           </div>
         </div>

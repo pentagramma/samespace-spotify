@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-const SongList = ({ songs, onSelectSong, showTopTracks, searchQuery }) => {
+const SongList = ({ songs, onSelectSong, showTopTracks, searchQuery, currentPlayingSongId }) => {
   const [durations, setDurations] = useState({});
 
   useEffect(() => {
@@ -43,7 +43,7 @@ const SongList = ({ songs, onSelectSong, showTopTracks, searchQuery }) => {
       {filteredSongs.map(song => (
         <div
           key={song.id}
-          className='w-[432px] h-[70px] mb-[8px] bg-transparent flex flex-row justify-between items-center cursor-pointer hover:bg-white hover:bg-opacity-[8%] px-2 rounded-md hover:duration-300'
+          className={`w-[432px] h-[70px] mb-[8px] bg-transparent flex flex-row justify-between items-center cursor-pointer px-2 rounded-md hover:duration-300 hover:bg-white hover:bg-opacity-[6%] ${currentPlayingSongId === song.id ? 'bg-white bg-opacity-[8%]' : ''}`}
           onClick={() => onSelectSong(song)}
         >
           <div className='flex flex-row items-center'>
