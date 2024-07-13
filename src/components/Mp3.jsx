@@ -4,13 +4,14 @@ import Next from '../assets/next.png';
 import Back from '../assets/prev.png';
 import { FaCirclePlay } from "react-icons/fa6";
 import Sound from '../assets/sound.png';
-import { MdPauseCircle, MdPlayCircle } from "react-icons/md";
+import { MdPauseCircle } from "react-icons/md";
 import Options from '../assets/options.png';
 
-const Mp3 = ({ selectedSong, setDuration, onNext, onPrev }) => { 
+const Mp3 = ({ selectedSong, setDuration, onNext, onPrev }) => {
   const [sliderValue, setSliderValue] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [currentTime, setCurrentTime] = useState(0); 
+  const [currentTime, setCurrentTime] = useState(0);
+  const [isSoundbarOpen, setIsSoundbarOpen] = useState(false);
   const audioRef = useRef(null);
   const animationRef = useRef(null);
 
@@ -32,7 +33,7 @@ const Mp3 = ({ selectedSong, setDuration, onNext, onPrev }) => {
       audioRef.current.src = selectedSong.url;
       audioRef.current.play();
       setIsPlaying(true);
-      setDuration(audioRef.current.duration); 
+      setDuration(audioRef.current.duration);
     }
   }, [selectedSong, setDuration]);
 
@@ -65,6 +66,17 @@ const Mp3 = ({ selectedSong, setDuration, onNext, onPrev }) => {
 
   const handlePlayPause = () => {
     setIsPlaying(!isPlaying);
+  };
+
+  const toggleSoundbar = () => {
+    setIsSoundbarOpen(!isSoundbarOpen);
+  };
+
+  const handleVolumeChange = (e) => {
+    const newVolume = e.target.value;
+    if (audioRef.current) {
+      audioRef.current.volume = newVolume / 100;
+    }
   };
 
   const formatTime = (seconds) => {
@@ -112,14 +124,14 @@ const Mp3 = ({ selectedSong, setDuration, onNext, onPrev }) => {
             <img src={Options} alt="" />
           </div>
           <div className='flex flex-row items-center'>
-            <img 
-              src={Back} 
-              alt="" 
-              className='mx-4 cursor-pointer hover:scale-110 hover:duration-300' 
-              onClick={onPrev} 
+            <img
+              src={Back}
+              alt=""
+              className='mx-4 cursor-pointer hover:scale-110 hover:duration-300'
+              onClick={onPrev}
             />
-            <div 
-              className='mx-4 cursor-pointer hover:scale-110 hover:duration-300' 
+            <div
+              className='mx-4 cursor-pointer hover:scale-110 hover:duration-300'
               onClick={handlePlayPause}
             >
               {isPlaying ? (
@@ -128,15 +140,33 @@ const Mp3 = ({ selectedSong, setDuration, onNext, onPrev }) => {
                 <FaCirclePlay alt="" className='w-12 h-12'/>
               )}
             </div>
-            <img 
-              src={Next} 
-              alt="" 
-              className='mx-4 cursor-pointer hover:scale-110 hover:duration-300' 
-              onClick={onNext} 
+            <img
+              src={Next}
+              alt=""
+              className='mx-4 cursor-pointer hover:scale-110 hover:duration-300'
+              onClick={onNext}
             />
           </div>
-          <div className=''>
-            <img src={Sound} alt="" className='cursor-pointer hover:scale-110 hover:duration-300'/>
+          <div className='relative'>
+            <img
+              src={Sound}
+              alt=""
+              className='cursor-pointer hover:scale-110 hover:duration-300'
+              onClick={toggleSoundbar}
+            />
+            {isSoundbarOpen && (
+              <div className='absolute top-full right-0 w-[100px]'>
+                <input
+                  type='range'
+                  min='0'
+                  max='100'
+                  defaultValue={audioRef.current ? audioRef.current.volume * 100 : 50}
+                  onChange={handleVolumeChange}
+                  className='custom-slider w-full'
+                />
+                <div className='text-white text-xs mt-1'>{Math.round(audioRef.current?.volume * 100)}%</div>
+              </div>
+            )}
           </div>
         </div>
       </div>

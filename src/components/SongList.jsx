@@ -43,7 +43,7 @@ const SongList = ({ songs, onSelectSong, showTopTracks, searchQuery, currentPlay
       {filteredSongs.map(song => (
         <div
           key={song.id}
-          className={`w-[432px] h-[70px] mb-[8px] bg-transparent flex flex-row justify-between items-center cursor-pointer px-2 rounded-md hover:duration-300 hover:bg-white hover:bg-opacity-[6%] ${currentPlayingSongId === song.id ? 'bg-white bg-opacity-[8%]' : ''}`}
+          className={`w-[432px] h-[70px] mb-[8px] bg-transparent flex flex-row justify-between items-center cursor-pointer px-2 rounded-md hover:duration-300 hover:bg-white hover:bg-opacity-[4%] ${currentPlayingSongId === song.id ? 'bg-white bg-opacity-[8%]' : ''}`}
           onClick={() => onSelectSong(song)}
         >
           <div className='flex flex-row items-center'>
@@ -56,7 +56,7 @@ const SongList = ({ songs, onSelectSong, showTopTracks, searchQuery, currentPlay
             </div>
           </div>
           <div className='text-gray-400 duration'>
-            {durations[song.id] ? formatDuration(durations[song.id]) : 'Loading...'} {/* Show loading until the duration is fetched */}
+            {durations[song.id] ? formatDuration(durations[song.id]) : 'Loading...'}
           </div>
         </div>
       ))}
