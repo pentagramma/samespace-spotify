@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import '../App.css';
 import Next from '../assets/next.png';
 import Back from '../assets/prev.png';
-import { IoSettingsOutline } from "react-icons/io5";
+import { FaCirclePlay } from "react-icons/fa6";
 import Sound from '../assets/sound.png';
 import { MdPauseCircle, MdPlayCircle } from "react-icons/md";
 import Options from '../assets/options.png'
@@ -117,7 +117,7 @@ const Mp3 = ({ selectedSong, setDuration }) => { // Receive setDuration as a pro
               {isPlaying ? (
                 <MdPauseCircle className='w-12 h-12 text-white'/>
               ) : (
-                <MdPlayCircle alt="" className='w-12 h-12'/>
+                <FaCirclePlay alt="" className='w-12 h-12'/>
               )}
             </div>
             <img src={Next} alt="" className='mx-4 cursor-pointer hover:scale-110 hover:duration-300'/>
