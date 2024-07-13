@@ -2,37 +2,39 @@ import React, { useEffect, useState } from 'react';
 
 const SongList = ({ onSelectSong, showTopTracks, searchQuery }) => {
   const [songs, setSongs] = useState([]);
+  const [durations, setDurations] = useState({}); // State to hold the durations
 
   useEffect(() => {
     fetch('https://cms.samespace.com/items/songs')
       .then(response => response.json())
       .then(async data => {
-        const songsWithDuration = await Promise.all(data.data.map(async song => {
-          const durationInSeconds = await fetchDuration(`https://cms.samespace.com/assets/${song.cover}`);
-          return {
-            ...song,
-            durationInSeconds
-          };
-        }));
-        setSongs(songsWithDuration);
+        setSongs(data.data);
+        // Fetch durations for each song
+        const durationsMap = {};
+        for (let song of data.data) {
+          const durationInSeconds = await fetchDuration(song.url);
+          durationsMap[song.id] = durationInSeconds;
+        }
+        setDurations(durationsMap);
       })
       .catch(error => console.error('Error fetching songs:', error));
   }, []);
 
   const fetchDuration = async (url) => {
-    try {
-      const response = await fetch(url);
-      const metadata = await response.json(); // assuming the response contains metadata
-      return metadata.duration; // adjust this according to the actual response structure
-    } catch (error) {
-      console.error('Error fetching duration:', error);
-      return 0; // return 0 if there's an error
-    }
+    return new Promise((resolve) => {
+      const audio = new Audio(url);
+      audio.addEventListener('loadedmetadata', () => {
+        resolve(audio.duration);
+      });
+      audio.addEventListener('error', () => {
+        resolve(0);
+      });
+    });
   };
 
   const formatDuration = (seconds) => {
     const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = seconds % 60;
+    const remainingSeconds = Math.floor(seconds % 60);
     return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
   };
 
@@ -58,7 +60,7 @@ const SongList = ({ onSelectSong, showTopTracks, searchQuery }) => {
             </div>
           </div>
           <div className='text-gray-400 duration'>
-            {formatDuration(song.durationInSeconds)}
+            {durations[song.id] ? formatDuration(durations[song.id]) : 'Loading...'} {/* Show loading until the duration is fetched */}
           </div>
         </div>
       ))}

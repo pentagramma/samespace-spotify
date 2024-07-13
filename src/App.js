@@ -1,14 +1,15 @@
+import React, { useState } from "react";
 import "./App.css";
 import Logo from "../src/assets/Logo.svg";
 import SongNav from "./components/SongNav";
 import SongList from "./components/SongList";
 import Mp3 from "./components/Mp3";
-import { useState } from "react";
 
 function App() {
   const [selectedSong, setSelectedSong] = useState(null);
   const [showTopTracks, setShowTopTracks] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [duration, setDuration] = useState(0); // Added duration state
 
   const backgroundStyle = selectedSong
     ? { background: `linear-gradient(to right, ${selectedSong.accent}, black)` }
@@ -42,7 +43,8 @@ function App() {
             </div>
           </div>
           <div>
-            <Mp3 selectedSong={selectedSong} />
+            <Mp3 selectedSong={selectedSong} setDuration={setDuration} />{" "}
+            {/* Pass setDuration to Mp3 */}
           </div>
         </div>
       </div>

@@ -6,10 +6,9 @@ import { PiDotsThreeOutlineFill } from "react-icons/pi";
 import Sound from '../assets/sound.png';
 import { MdPauseCircle, MdPlayCircle } from "react-icons/md";
 
-const Mp3 = ({ selectedSong }) => {
+const Mp3 = ({ selectedSong, setDuration }) => { // Receive setDuration as a prop
   const [sliderValue, setSliderValue] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [duration, setDuration] = useState(0); // Duration of the song in seconds
   const [currentTime, setCurrentTime] = useState(0); // Current time of the song in seconds
   const audioRef = useRef(null);
   const animationRef = useRef(null);
@@ -34,13 +33,13 @@ const Mp3 = ({ selectedSong }) => {
       setIsPlaying(true);
       setDuration(audioRef.current.duration); // Set the duration of the song
     }
-  }, [selectedSong]);
+  }, [selectedSong, setDuration]);
 
   useEffect(() => {
     const updateSlider = () => {
       if (audioRef.current) {
         setCurrentTime(audioRef.current.currentTime);
-        setSliderValue((audioRef.current.currentTime / duration) * 100);
+        setSliderValue((audioRef.current.currentTime / audioRef.current.duration) * 100);
       }
       animationRef.current = requestAnimationFrame(updateSlider);
     };
@@ -52,13 +51,13 @@ const Mp3 = ({ selectedSong }) => {
     }
 
     return () => cancelAnimationFrame(animationRef.current);
-  }, [isPlaying, duration]);
+  }, [isPlaying]);
 
   const handleSliderChange = (e) => {
     const newValue = e.target.value;
     setSliderValue(newValue);
     if (audioRef.current) {
-      audioRef.current.currentTime = (newValue / 100) * duration;
+      audioRef.current.currentTime = (newValue / 100) * audioRef.current.duration;
       setCurrentTime(audioRef.current.currentTime);
     }
   };
@@ -105,7 +104,7 @@ const Mp3 = ({ selectedSong }) => {
         </div>
         <div className='time flex justify-between w-full text-sm mt-5'>
           <span>{formatTime(currentTime)}</span>
-          <span className='song-duration'>{formatTime(duration)}</span>
+          <span className='song-duration'>{formatTime(audioRef.current?.duration || 0)}</span> {/* Updated */}
         </div>
         <div className='mt-4 flex justify-between w-full items-center'>
           <div className=''>
