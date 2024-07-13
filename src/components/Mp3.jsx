@@ -10,6 +10,7 @@ const Mp3 = ({ selectedSong }) => {
   const [sliderValue, setSliderValue] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [duration, setDuration] = useState(0); // Duration of the song in seconds
+  const [currentTime, setCurrentTime] = useState(0); // Current time of the song in seconds
   const audioRef = useRef(null);
   const animationRef = useRef(null);
 
@@ -37,7 +38,10 @@ const Mp3 = ({ selectedSong }) => {
 
   useEffect(() => {
     const updateSlider = () => {
-      setSliderValue((audioRef.current.currentTime / duration) * 100);
+      if (audioRef.current) {
+        setCurrentTime(audioRef.current.currentTime);
+        setSliderValue((audioRef.current.currentTime / duration) * 100);
+      }
       animationRef.current = requestAnimationFrame(updateSlider);
     };
 
@@ -55,6 +59,7 @@ const Mp3 = ({ selectedSong }) => {
     setSliderValue(newValue);
     if (audioRef.current) {
       audioRef.current.currentTime = (newValue / 100) * duration;
+      setCurrentTime(audioRef.current.currentTime);
     }
   };
 
@@ -99,12 +104,12 @@ const Mp3 = ({ selectedSong }) => {
           />
         </div>
         <div className='time flex justify-between w-full text-sm mt-5'>
-          <span>{formatTime(0)}</span>
-          <span>{formatTime(duration)}</span>
+          <span>{formatTime(currentTime)}</span>
+          <span className='song-duration'>{formatTime(duration)}</span>
         </div>
         <div className='mt-4 flex justify-between w-full items-center'>
           <div className=''>
-            <PiDotsThreeOutlineFill className='rounded-full bg-gray-700 p-6 cursor-pointer hover:scale-110 hover:duration-300 text-white'/>
+            <PiDotsThreeOutlineFill className='rounded-full bg-gray-300 opacity-45 p-6 cursor-pointer hover:scale-110 hover:duration-300 text-white'/>
           </div>
           <div className='flex flex-row items-center'>
             <img src={Back} alt="" className='mx-4 cursor-pointer hover:scale-110 hover:duration-300'/>
@@ -130,4 +135,3 @@ const Mp3 = ({ selectedSong }) => {
 }
 
 export default Mp3;
-
