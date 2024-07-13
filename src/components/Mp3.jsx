@@ -121,7 +121,7 @@ const Mp3 = ({ selectedSong, setDuration, onNext, onPrev }) => {
         </div>
         <div className='mt-4 flex justify-between w-full items-center'>
           <div>
-            <img src={Options} alt="" />
+            <img src={Options} alt="" className='cursor-pointer hover:scale-110 hover:duration-300'/>
           </div>
           <div className='flex flex-row items-center'>
             <img
@@ -135,9 +135,9 @@ const Mp3 = ({ selectedSong, setDuration, onNext, onPrev }) => {
               onClick={handlePlayPause}
             >
               {isPlaying ? (
-                <MdPauseCircle className='w-12 h-12 text-white'/>
+                <MdPauseCircle className='w-12 h-12'/>
               ) : (
-                <FaCirclePlay alt="" className='w-12 h-12'/>
+                <FaCirclePlay alt="" className='w-12 h-12 size-[48px]'/>
               )}
             </div>
             <img
