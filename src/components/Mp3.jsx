@@ -88,7 +88,7 @@ const Mp3 = ({ selectedSong, setDuration }) => { // Receive setDuration as a pro
           <img
             src={`https://cms.samespace.com/assets/${selectedSong.cover}`}
             alt={`${selectedSong.name} cover`}
-            className='w-full h-full object-cover'
+            className='w-full h-full object-cover rounded-md'
           />
         )}
       </div>
