@@ -47,7 +47,7 @@ const SongList = ({ onSelectSong, showTopTracks, searchQuery }) => {
       {filteredSongs.map(song => (
         <div
           key={song.id}
-          className='w-[432px] h-[70px] mb-[10px] bg-transparent flex flex-row justify-between items-center cursor-pointer hover:bg-black px-2 rounded-md hover:duration-300'
+          className='w-[432px] h-[70px] mb-[8px] bg-transparent flex flex-row justify-between items-center cursor-pointer hover:bg-black px-2 rounded-md hover:duration-300'
           onClick={() => onSelectSong(song)}
         >
           <div className='flex flex-row items-center'>

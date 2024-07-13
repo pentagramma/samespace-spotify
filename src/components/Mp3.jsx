@@ -2,9 +2,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import '../App.css';
 import Next from '../assets/next.png';
 import Back from '../assets/prev.png';
-import { PiDotsThreeOutlineFill } from "react-icons/pi";
+import { IoSettingsOutline } from "react-icons/io5";
 import Sound from '../assets/sound.png';
 import { MdPauseCircle, MdPlayCircle } from "react-icons/md";
+import Options from '../assets/options.png'
 
 const Mp3 = ({ selectedSong, setDuration }) => { // Receive setDuration as a prop
   const [sliderValue, setSliderValue] = useState(0);
@@ -107,9 +108,9 @@ const Mp3 = ({ selectedSong, setDuration }) => { // Receive setDuration as a pro
           <span className='song-duration'>{formatTime(audioRef.current?.duration || 0)}</span> {/* Updated */}
         </div>
         <div className='mt-4 flex justify-between w-full items-center'>
-          <div className=''>
-            <PiDotsThreeOutlineFill className='rounded-full bg-gray-300 opacity-45 p-6 cursor-pointer hover:scale-110 hover:duration-300 text-white'/>
-          </div>
+        <div>
+          <img src={Options} alt="" />
+        </div>
           <div className='flex flex-row items-center'>
             <img src={Back} alt="" className='mx-4 cursor-pointer hover:scale-110 hover:duration-300'/>
             <div className='mx-4 cursor-pointer hover:scale-110 hover:duration-300' onClick={handlePlayPause}>
