@@ -66,6 +66,7 @@ function App() {
             </div>
             <div className="flex justify-start mt-[32px]">
               <SongList
+                songs={songs} // Pass songs state as prop
                 onSelectSong={handleSelectSong}
                 showTopTracks={showTopTracks}
                 searchQuery={searchQuery}

@@ -1,24 +1,20 @@
 import React, { useEffect, useState } from 'react';
 
-const SongList = ({ onSelectSong, showTopTracks, searchQuery }) => {
-  const [songs, setSongs] = useState([]);
-  const [durations, setDurations] = useState({}); // State to hold the durations
+const SongList = ({ songs, onSelectSong, showTopTracks, searchQuery }) => {
+  const [durations, setDurations] = useState({});
 
   useEffect(() => {
-    fetch('https://cms.samespace.com/items/songs')
-      .then(response => response.json())
-      .then(async data => {
-        setSongs(data.data);
-       
-        const durationsMap = {};
-        for (let song of data.data) {
-          const durationInSeconds = await fetchDuration(song.url);
-          durationsMap[song.id] = durationInSeconds;
-        }
-        setDurations(durationsMap);
-      })
-      .catch(error => console.error('Error fetching songs:', error));
-  }, []);
+    const fetchDurations = async () => {
+      const durationsMap = {};
+      for (let song of songs) {
+        const durationInSeconds = await fetchDuration(song.url);
+        durationsMap[song.id] = durationInSeconds;
+      }
+      setDurations(durationsMap);
+    };
+
+    fetchDurations();
+  }, [songs]);
 
   const fetchDuration = async (url) => {
     return new Promise((resolve) => {
@@ -47,7 +43,7 @@ const SongList = ({ onSelectSong, showTopTracks, searchQuery }) => {
       {filteredSongs.map(song => (
         <div
           key={song.id}
-          className='w-[432px] h-[70px] mb-[8px] bg-transparent flex flex-row justify-between items-center cursor-pointer hover:bg-black px-2 rounded-md hover:duration-300'
+          className='w-[432px] h-[70px] mb-[8px] bg-transparent flex flex-row justify-between items-center cursor-pointer hover:bg-white hover:bg-opacity-[8%] px-2 rounded-md hover:duration-300'
           onClick={() => onSelectSong(song)}
         >
           <div className='flex flex-row items-center'>
