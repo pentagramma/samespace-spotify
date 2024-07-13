@@ -7,10 +7,10 @@ import Sound from '../assets/sound.png';
 import { MdPauseCircle, MdPlayCircle } from "react-icons/md";
 import Options from '../assets/options.png'
 
-const Mp3 = ({ selectedSong, setDuration }) => { // Receive setDuration as a prop
+const Mp3 = ({ selectedSong, setDuration }) => { 
   const [sliderValue, setSliderValue] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [currentTime, setCurrentTime] = useState(0); // Current time of the song in seconds
+  const [currentTime, setCurrentTime] = useState(0); 
   const audioRef = useRef(null);
   const animationRef = useRef(null);
 
@@ -32,7 +32,7 @@ const Mp3 = ({ selectedSong, setDuration }) => { // Receive setDuration as a pro
       audioRef.current.src = selectedSong.url;
       audioRef.current.play();
       setIsPlaying(true);
-      setDuration(audioRef.current.duration); // Set the duration of the song
+      setDuration(audioRef.current.duration); 
     }
   }, [selectedSong, setDuration]);
 
