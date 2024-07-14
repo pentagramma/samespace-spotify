@@ -117,7 +117,7 @@ const Mp3 = ({ selectedSong, setDuration, onNext, onPrev }) => {
           {selectedSong ? selectedSong.artist : ''}
         </h2>
       </div>
-      <div className='w-[480px] h-[480px] mt-[32px]'>
+      <div className='w-[300px] h-[300px] md:w-[480px] md:h-[480px] mt-[32px]'>
         {selectedSong && (
           <img
             src={`https://cms.samespace.com/assets/${selectedSong.cover}`}
@@ -126,7 +126,7 @@ const Mp3 = ({ selectedSong, setDuration, onNext, onPrev }) => {
           />
         )}
       </div>
-      <div className='flex flex-col items-center justify-center mt-[15px] w-[480px]'>
+      <div className='flex flex-col items-center justify-center mt-[15px] w-[300px] md:w-[480px]'>
         <div className='slider w-full h-[6px]'>
           <input
             type='range'
@@ -141,7 +141,7 @@ const Mp3 = ({ selectedSong, setDuration, onNext, onPrev }) => {
           <span>{formatTime(currentTime)}</span>
           <span className='song-duration'>{formatTime(audioRef.current?.duration || 0)}</span>
         </div>
-        <div className='mt-4 flex justify-between w-full items-center'>
+        <div className='mt-7 flex justify-between w-full items-center'>
           <div>
             <img src={Options} alt="" className='cursor-pointer hover:scale-110 hover:duration-300'/>
           </div>
@@ -177,7 +177,7 @@ const Mp3 = ({ selectedSong, setDuration, onNext, onPrev }) => {
               onClick={toggleSoundbar}
             />
             {isSoundbarOpen && (
-              <div className='absolute top-full right-0 w-[100px]'>
+              <div className='absolute bottom-8 right-0 w-[100px] mb-2'>
                 <input
                   type='range'
                   min='0'

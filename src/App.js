@@ -69,7 +69,7 @@ function App() {
               />
             </div>
             <div
-              className={`w-full mt-[40px] ml-[400px] ${
+              className={`w-full  mt-[40px] ${
                 isMobileMenuOpen ? "block" : "hidden"
               } md:block`}
             >
