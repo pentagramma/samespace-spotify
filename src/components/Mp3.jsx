@@ -108,7 +108,7 @@ const Mp3 = ({ selectedSong, setDuration, onNext, onPrev }) => {
   };
 
   return (
-    <div className='text-white ml-[200px] mt-[101px] flex-col font-inter'>
+    <div className='text-white lg:ml-[200px] md:ml-[200px] mt-[101px] flex-col font-inter'>
       <div className='flex flex-col'>
         <h1 className='text-[32px] font-[700]'>
           {selectedSong ? selectedSong.name : 'Select a song'}
