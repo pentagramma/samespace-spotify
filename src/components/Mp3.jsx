@@ -12,6 +12,8 @@ const Mp3 = ({ selectedSong, setDuration, onNext, onPrev }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [isSoundbarOpen, setIsSoundbarOpen] = useState(false);
+  const [volume, setVolume] = useState(50); // Initial volume set to 50%
+  const [hasInteracted, setHasInteracted] = useState(false);
   const audioRef = useRef(null);
   const animationRef = useRef(null);
 
@@ -24,16 +26,35 @@ const Mp3 = ({ selectedSong, setDuration, onNext, onPrev }) => {
 
   useEffect(() => {
     if (audioRef.current) {
-      isPlaying ? audioRef.current.play() : audioRef.current.pause();
+      if (isPlaying) {
+        if (!hasInteracted) {
+          // Add user interaction check
+          const handleUserInteraction = () => {
+            audioRef.current.play();
+            setHasInteracted(true);
+            document.removeEventListener('click', handleUserInteraction);
+          };
+          document.addEventListener('click', handleUserInteraction);
+        } else {
+          audioRef.current.play();
+        }
+      } else {
+        audioRef.current.pause();
+      }
     }
-  }, [isPlaying]);
+  }, [isPlaying, hasInteracted]);
 
   useEffect(() => {
     if (selectedSong && audioRef.current) {
       audioRef.current.src = selectedSong.url;
-      audioRef.current.play();
-      setIsPlaying(true);
-      setDuration(audioRef.current.duration);
+      audioRef.current.play().then(() => {
+        setIsPlaying(true);
+        setDuration(audioRef.current.duration);
+        setHasInteracted(true); // Consider it interacted if play is successful
+      }).catch(error => {
+        console.error("Error attempting to play:", error);
+        setIsPlaying(false); // Reset play state if play fails
+      });
     }
   }, [selectedSong, setDuration]);
 
@@ -74,6 +95,7 @@ const Mp3 = ({ selectedSong, setDuration, onNext, onPrev }) => {
 
   const handleVolumeChange = (e) => {
     const newVolume = e.target.value;
+    setVolume(newVolume);
     if (audioRef.current) {
       audioRef.current.volume = newVolume / 100;
     }
@@ -135,7 +157,7 @@ const Mp3 = ({ selectedSong, setDuration, onNext, onPrev }) => {
               onClick={handlePlayPause}
             >
               {isPlaying ? (
-                <MdPauseCircle className='w-12 h-12'/>
+                <MdPauseCircle className='w-12 h-12 size-[48px]'/>
               ) : (
                 <FaCirclePlay alt="" className='w-12 h-12 size-[48px]'/>
               )}
@@ -160,11 +182,11 @@ const Mp3 = ({ selectedSong, setDuration, onNext, onPrev }) => {
                   type='range'
                   min='0'
                   max='100'
-                  defaultValue={audioRef.current ? audioRef.current.volume * 100 : 50}
+                  value={volume}
                   onChange={handleVolumeChange}
                   className='custom-slider w-full'
                 />
-                <div className='text-white text-xs mt-1'>{Math.round(audioRef.current?.volume * 100)}%</div>
+                <div className='text-white text-xs mt-1'>{volume}%</div>
               </div>
             )}
           </div>
