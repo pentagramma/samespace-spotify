@@ -39,7 +39,7 @@ const SongList = ({ songs, onSelectSong, showTopTracks, searchQuery, currentPlay
     .filter(song => song.name.toLowerCase().includes(searchQuery.toLowerCase()) || song.artist.toLowerCase().includes(searchQuery.toLowerCase()));
 
   return (
-    <div className='font-inter'>
+    <div className='font-inter mt-4'>
       {filteredSongs.map(song => (
         <div
           key={song.id}

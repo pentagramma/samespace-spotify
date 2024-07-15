@@ -5,6 +5,7 @@ import SongNav from "./components/SongNav";
 import SongList from "./components/SongList";
 import Mp3 from "./components/Mp3";
 import { FaBars } from "react-icons/fa";
+import { ImCross } from "react-icons/im";
 
 function App() {
   const [songs, setSongs] = useState([]);
@@ -63,15 +64,22 @@ function App() {
         <div className="flex flex-col md:flex-row w-full">
           <div className="flex flex-col w-full md:w-1/3 items-center p-4">
             <div className="block md:hidden">
-              <FaBars
-                className="text-white text-2xl cursor-pointer"
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              />
+              {isMobileMenuOpen ? (
+                <ImCross
+                  className="text-white text-xl cursor-pointer relative bottom-14 left-[200px] font-lig"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                />
+              ) : (
+                <FaBars
+                  className="text-white text-2xl relative bottom-14 left-[200px] scursor-pointer"
+                  onClick={() => setIsMobileMenuOpen(true)}
+                />
+              )}
             </div>
             <div
-              className={`w-full  mt-[40px] ${
+              className={`w-full sm:ml-[230px] sm:mt-[15px] flex flex-col justify-center items-center song-list sm:flex sm:flex-col sm:justify-center sm:items-center md:flex md:flex-col md:justify-center md:items-center ${
                 isMobileMenuOpen ? "block" : "hidden"
-              } md:block`}
+              } md:ml-[12cm] md:mt-0 md:block`}
             >
               <SongNav
                 setShowTopTracks={setShowTopTracks}
@@ -88,7 +96,7 @@ function App() {
               />
             </div>
           </div>
-          <div className="flex-1 flex justify-center items-center p-4 ">
+          <div className="flex-1 flex justify-center items-center p-4">
             <Mp3
               selectedSong={selectedSong}
               setDuration={setDuration}
