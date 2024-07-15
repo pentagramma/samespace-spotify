@@ -58,20 +58,20 @@ function App() {
         className="dynamic-bg w-full min-h-screen flex flex-col md:flex-row"
         style={backgroundStyle}
       >
-        <div className="p-4">
-          <img src={Logo} alt="" className="w-32 h-10" />
+        <div className="p-4 sm:absolute sm:left-2 md:absolute md:left-2">
+          <img src={Logo} alt="" className="w-[133.41px] h-[40px]" />
         </div>
         <div className="flex flex-col md:flex-row w-full">
           <div className="flex flex-col w-full md:w-1/3 items-center p-4">
             <div className="block md:hidden">
               {isMobileMenuOpen ? (
                 <ImCross
-                  className="text-white text-xl cursor-pointer relative bottom-14 left-[200px] font-lig"
+                  className="text-white text-xl cursor-pointer relative bottom-14 left-[170px] font-lig"
                   onClick={() => setIsMobileMenuOpen(false)}
                 />
               ) : (
                 <FaBars
-                  className="text-white text-2xl relative bottom-14 left-[200px] scursor-pointer"
+                  className="text-white text-2xl relative bottom-14 left-[170px] scursor-pointer"
                   onClick={() => setIsMobileMenuOpen(true)}
                 />
               )}
@@ -79,7 +79,7 @@ function App() {
             <div
               className={`w-full sm:ml-[230px] sm:mt-[15px] flex flex-col justify-center items-center song-list sm:flex sm:flex-col sm:justify-center sm:items-center md:flex md:flex-col md:justify-center md:items-center ${
                 isMobileMenuOpen ? "block" : "hidden"
-              } md:ml-[12cm] md:mt-0 md:block`}
+              } md:ml-[12cm] md:block`}
             >
               <SongNav
                 setShowTopTracks={setShowTopTracks}
