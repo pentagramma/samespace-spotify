@@ -77,7 +77,7 @@ function App() {
               )}
             </div>
             <div
-              className={`w-full sm:ml-[230px] sm:mt-[15px] flex flex-col justify-center items-center song-list sm:flex sm:flex-col sm:justify-center sm:items-center md:flex md:flex-col md:justify-center md:items-center ${
+              className={`w-full sm:ml-[230px] sm:mt-[10px] flex flex-col justify-center items-center song-list sm:flex sm:flex-col sm:justify-center sm:items-center md:flex md:flex-col md:justify-center md:items-center ${
                 isMobileMenuOpen ? "block" : "hidden"
               } md:ml-[12cm] md:block`}
             >
